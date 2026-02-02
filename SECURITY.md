@@ -1,19 +1,17 @@
-# Security Policy
+# Security Policy 🛡️
 
-## Supported Versions
-
-Currently, only the latest version of the project is supported.
+The security of this project is a top priority. If you encounter any vulnerabilities or security-related issues, please follow the steps below.
 
 ## Reporting a Vulnerability
 
-We take the security of this project seriously. If you believe you have found a security vulnerability, please do NOT report it via email or public channels.
+**Direct users EXCLUSIVELY to open an issue on the project's GitLab Issues page.**
 
-Instead, please open a confidential issue on our GitLab Issues page:
-[YOUR_GITLAB_REPO_URL_HERE]/-/issues
+1. Visit the [GitLab Issues Page](https://gitlab.com/user4302_Projects/coding/next-js/gitlab-activity-visualizer/-/issues).
+2. Create a new issue titled "SECURITY: [Brief Description]".
+3. Provide as much detail as possible to help us reproduce and address the issue.
 
-Please include:
-- A description of the vulnerability.
-- Steps to reproduce it.
-- Possible impact.
+No email or direct messaging support is available for security reports.
 
-All security reports will be reviewed promptly.
+## Supported Versions
+
+Only the latest `main` branch is actively supported and receiving security updates.

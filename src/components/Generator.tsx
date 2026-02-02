@@ -3,6 +3,11 @@
 
 import React, { useState, useEffect } from 'react';
 
+/**
+ * The primary interface for generating GitLab contribution calendars.
+ * Handles user input for username and theme, and provides a live preview
+ * and Markdown link for embedding.
+ */
 export function Generator() {
     const [username, setUsername] = useState('user4302');
     const [theme, setTheme] = useState('classic');
@@ -27,7 +32,7 @@ export function Generator() {
     };
 
     const themes = [
-        { id: 'classic', name: 'GitLab Green', colors: ['bg-[#161b22]', 'bg-[#104d2c]', 'bg-[#1b7d41]', 'bg-[#28a745]', 'bg-[#39d353]'] },
+        { id: 'classic', name: 'GitLab Light', colors: ['bg-[#f2f2f2]', 'bg-[#c3e6cb]', 'bg-[#71c68d]', 'bg-[#28a745]', 'bg-[#165c26]'] },
         { id: 'dark', name: 'GitLab Dark', colors: ['bg-[#161b22]', 'bg-[#104d2c]', 'bg-[#1b7d41]', 'bg-[#28a745]', 'bg-[#39d353]'] },
         { id: 'blue', name: 'Sky Blue', colors: ['bg-[#161b22]', 'bg-[#2a4481]', 'bg-[#456db1]', 'bg-[#6293d6]', 'bg-[#a5d0ff]'] },
         { id: 'orange', name: 'Warm Orange', colors: ['bg-[#161b22]', 'bg-[#5c2d1b]', 'bg-[#92400e]', 'bg-[#f97316]', 'bg-[#fde047]'] },
@@ -105,7 +110,7 @@ export function Generator() {
                     <div className="w-full max-w-full overflow-x-auto pb-6 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent">
                         <div className="min-w-fit mx-auto">
                             <img
-                                src={embedUrl}
+                                src={`${embedUrl}&t=${new Date().getTime()}`}
                                 alt="GitLab Contribution Calendar"
                                 className="max-w-none filter drop-shadow-[0_0_50px_rgba(16,185,129,0.08)]"
                                 key={`${username}-${theme}`}

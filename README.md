@@ -1,116 +1,106 @@
-# GitLab Contribution Calendar Generator
+# GitLab Activity Visualizer 🚀
 
-🚀 A dynamic, high-performance service to visualize your GitLab activity via embedded SVGs.
+A high-performance, real-time GitLab contribution calendar generator for GitHub Profile READMEs and personal portfolios.
+
+![GitLab Activity](https://user4302-gitlab-activity-visualizer.netlify.app/api/calendar?username=user4302&theme=dark)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
-[![Next.js](https://img.shields.io/badge/Built%20with-Next.js-black?logo=next.js)](https://nextjs.org/)
+[![GitLab Issues](https://img.shields.io/badge/GitLab-Issues-blue?logo=gitlab)](https://gitlab.com/user4302_Projects/coding/next-js/gitlab-activity-visualizer/-/issues)
+[![Deployment Status](https://img.shields.io/badge/Netlify-Deployed-success?logo=netlify)](https://user4302-gitlab-activity-visualizer.netlify.app)
 
 ## Features ✨
-- **Dynamic SVG API**: Direct embedding in READMEs via a simple URL.
-- **Classic & Custom Themes**: Choose from multiple color schemes including GitLab Classic, Dark Mode, Sky Blue, and Warm Orange.
-- **Month & Day Labels**: Professional layout with clear temporal markers.
-- **Premium Generator UI**: Interactive web interface with live preview and one-click copy.
-- **Performant & Scalable**: Server-side rendering with caching for optimal speed.
+
+- **Real-Time Data**: Fetches directly from GitLab's official activity API.
+- **5-Range Precision**: Matches GitLab's official breakdown: `0, 1-9, 10-19, 20-29, 30+`.
+- **Multiple Themes**: Supports `GitLab Light`, `GitLab Dark`, `Sky Blue`, and `Warm Orange`.
+- **High Performance**: Optimized with SVG rendering and caching for instant loads.
+- **Easy Embed**: Simple Markdown syntax for GitHub and GitLab READMEs.
+- **Premium UI**: Interactive generator with live preview and theme selector.
 
 ## Tech Stack / Built With 🛠️
-- **Framework**: [Next.js](https://nextjs.org/) (App Router)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Deployment**: Optimized for [Netlify](https://www.netlify.com/) or [Vercel](https://vercel.com/)
+- **API**: Next.js API Routes (Serverless)
+- **Deployment**: [Netlify](https://www.netlify.com/)
 
 ## Prerequisites
-- **Node.js**: v18.17.0 or higher
-- **npm**: v9.0.0 or higher
+
+- Node.js 18.x or 20.x
+- npm or yarn
 
 ## Installation 📥
-```bash
-# Clone the repository
-git clone [YOUR_GITLAB_REPO_URL_HERE]
 
-# Navigate to the project directory
-cd gitlab-contribution-calendar
+1. **Clone the repository**:
+   ```bash
+   git clone https://gitlab.com/user4302_Projects/coding/next-js/gitlab-activity-visualizer.git
+   cd gitlab-activity-visualizer
+   ```
 
-# Install dependencies
-npm install
-```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-## Usage / Quick Start ⚡
+3. **Run locally**:
+   ```bash
+   npm run dev
+   ```
+
+## Usage ⚡
+
 To embed your calendar in a README, use the following Markdown syntax:
 
 ```markdown
-![GitLab Activity](https://user4302-gitlab-activity-visualizer.netlify.app/api/calendar?username=user4302&theme=classic)
+![GitLab Activity](https://user4302-gitlab-activity-visualizer.netlify.app/api/calendar?username=user4302&theme=dark)
 ```
 
 ### URL Parameters
-| Parameter | Description | Options | Default |
-|-----------|-------------|---------|---------|
-| `username`| Your GitLab username | (string) | Required |
-| `theme`   | Visual color palette | `classic`, `dark`, `blue`, `orange` | `classic` |
+- `username`: Your GitLab username (required).
+- `theme`: Choice of `classic`, `dark`, `blue`, or `orange` (default: `classic`).
 
 ## Project Structure 📂
-```text
-├── src/
-│   ├── app/
-│   │   ├── api/calendar/route.ts  # Core SVG Rendering Logic
-│   │   ├── layout.tsx             # Root Layout
-│   │   └── page.tsx               # Landing Page UI
-│   └── components/
-│       └── Generator.tsx          # Interactive Generator Component
-├── public/                        # Static Assets
-└── tailwind.config.ts             # Styling Configuration
-```
 
-## Development / Running Locally 🏗️
+- `src/app/api/calendar/route.ts`: Core API logic for fetching data and generating SVG.
+- `src/components/Generator.tsx`: Interactive frontend for URL generation.
+- `src/app/page.tsx`: Landing page layout.
+
+## Configuration 🔧
+
+No API keys are required as it uses public GitLab profile data.
+
+## Development 🏗️
+
 ```bash
 # Start development server
 npm run dev
 
-# Open in browser
-# http://localhost:3000
+# Run linting
+npm run lint
 ```
 
 ## Building for Production 🏭
-```bash
-# Create production build
-npm run build
 
-# Start production server
-npm start
+```bash
+npm run build
 ```
 
 ## Deployment 🚀
 
-This project is optimized for deployment on **Netlify**.
+This project is optimized for **Netlify**.
+- **Build Command**: `npm run build`
+- **Publish Directory**: `.next`
 
-### Deploy via Netlify UI
-1. Push your code to a GitLab repository.
-2. Log in to [Netlify](https://app.netlify.com/).
-3. Click **"Add new site"** > **"Import an existing project"**.
-4. Select your GitLab repository.
-5. Netlify will automatically detect the Next.js settings:
-   - **Build command**: `npm run build`
-   - **Publish directory**: `.next`
-6. Click **"Deploy site"**.
-
-### Deploy via Netlify CLI
-```bash
-# Install Netlify CLI
-npm install -g netlify-cli
-
-# Login and deploy
-netlify login
-netlify deploy --build
-```
+The repository includes a `netlify.toml` for automatic configuration.
 
 ## Contributing 🤝
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details. For any communication, please use GitLab Issues.
+
+Contributions are highly encouraged! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details. All communication and pull requests must be handled via [GitLab Merge Requests](https://gitlab.com/user4302_Projects/coding/next-js/gitlab-activity-visualizer/-/merge_requests).
 
 ## License 📄
-Distributed under the MIT License. See `LICENSE` for more information.
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Support & Contact 👋
-For any questions, bug reports, feature requests, or security concerns, please open an issue on GitLab: [YOUR_GITLAB_REPO_URL_HERE]/-/issues. No email or direct messaging support is available.
 
----
-*Note: This project is not affiliated with GitLab Inc.*
+For any questions, bug reports, feature requests, or security concerns, please open an issue on GitLab: [Issues Page](https://gitlab.com/user4302_Projects/coding/next-js/gitlab-activity-visualizer/-/issues). No email or direct messaging support is available.

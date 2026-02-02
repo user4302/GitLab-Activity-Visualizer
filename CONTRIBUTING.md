@@ -1,31 +1,29 @@
-# Contributing to GitLab Contribution Calendar
+# Contributing to GitLab Activity Visualizer 🤝
 
-First off, thank you for considering contributing to this project! It's people like you that make it such a great tool.
+Thank you for your interest in contributing! This project follows a simple set of guidelines to ensure high quality and consistency.
 
-## How Can I Contribute?
+## Communication channels
 
-### Reporting Bugs
-Before creating bug reports, please check the existing issues as you might find out that you don't need to create a new one. When you are creating a bug report, please include as many details as possible.
+For all forms of contact, support, bug reports, questions, feature requests, or security issues: **direct users EXCLUSIVELY to open an issue on the project's GitLab Issues page.**
 
-### Suggesting Enhancements
-Enhancement suggestions are tracked as GitLab issues. After you've determined which repository your enhancement should be in, create an issue and provide the following information:
-* Use a clear and descriptive title for the issue to identify the suggestion.
-* Provide a step-by-step description of the suggested enhancement in as many details as possible.
+- [GitLab Issues](https://gitlab.com/user4302_Projects/coding/next-js/gitlab-activity-visualizer/-/issues)
 
-### Pull Requests
-1. Clone the repo and create your branch from `main`.
-2. If you've added code that should be tested, add tests.
-3. If you've changed APIs, update the documentation.
-4. Ensure the test suite passes.
-5. Make sure your code lints.
+No email or direct messaging support is available.
 
-## Styleguide
+## How to contribute
 
-### Git Commit Messages
-* Use the present tense ("Add feature" not "Added feature")
-* Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-* Limit the first line to 72 characters or less
-* Reference issues and pull requests liberally after the first line
+1. **Check for Issues**: Look at the active [Issues](https://gitlab.com/user4302_Projects/coding/next-js/gitlab-activity-visualizer/-/issues) to see if your idea or bug is already being tracked.
+2. **Open a New Issue**: If it's not tracked, open a new issue describing your proposed change or the bug you found.
+3. **Fork & Branch**: Fork the repository and create a descriptive branch for your changes.
+4. **Submit a Merge Request**: Once your changes are ready, submit a Merge Request on GitLab.
 
-## Communication
-For all forms of contact, support, bug reports, questions, feature requests, or security issues: please EXCLUSIVELY open an issue on the project's GitLab Issues page: [YOUR_GITLAB_REPO_URL_HERE]/-/issues. No email or direct messaging support is available.
+## Code Style
+
+- Use TypeScript for all logic.
+- Follow the existing Tailwind CSS patterns for styling.
+- Ensure all new components are responsive.
+- Document any major changes in the code via comments.
+
+## Support
+
+For any questions, please open an issue on GitLab.

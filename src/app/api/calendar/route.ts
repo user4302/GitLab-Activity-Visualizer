@@ -1,10 +1,17 @@
 
 import { NextRequest, NextResponse } from 'next/server';
+export const dynamic = 'force-dynamic';
 
+/**
+ * Handles GET requests to generate a GitLab contribution calendar SVG.
+ * 
+ * @param req - The incoming Next.js request containing 'username' and 'theme' query parameters.
+ * @returns A Response object containing the generated SVG or an error SVG.
+ */
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const username = searchParams.get('username');
-  const theme = searchParams.get('theme') || 'classic'; // classic, dark, blue, orange
+  const theme = searchParams.get('theme') || 'classic';
 
   if (!username) {
     return new NextResponse('Username is required', { status: 400 });
@@ -12,7 +19,7 @@ export async function GET(req: NextRequest) {
 
   try {
     const response = await fetch(`https://gitlab.com/users/${username}/calendar.json`, {
-      next: { revalidate: 3600 }
+      next: { revalidate: 0 } // Disable fetch cache for high responsiveness
     });
 
     if (!response.ok) {
@@ -30,7 +37,7 @@ export async function GET(req: NextRequest) {
     return new NextResponse(svg, {
       headers: {
         'Content-Type': 'image/svg+xml',
-        'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=600',
+        'Cache-Control': 'public, max-age=10, stale-while-revalidate=59',
       },
     });
   } catch (error) {
@@ -41,6 +48,12 @@ export async function GET(req: NextRequest) {
   }
 }
 
+/**
+ * Generates an SVG representation of an error message.
+ * 
+ * @param message - The error message to display in the SVG.
+ * @returns An SVG string showing the error.
+ */
 function generateErrorSVG(message: string) {
   return `<svg width="400" height="100" viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect width="400" height="100" fill="#161b22" rx="10"/>
@@ -50,6 +63,13 @@ function generateErrorSVG(message: string) {
 
 type ContributionData = { [date: string]: number };
 
+/**
+ * Generates the main contribution calendar SVG based on GitLab data.
+ * 
+ * @param data - The contribution data object (date -> count).
+ * @param theme - The selected theme ID (classic, dark, blue, orange).
+ * @returns A complete SVG string representing the activity calendar.
+ */
 function generateSVG(data: ContributionData, theme: string) {
   const squareSize = 10;
   const gap = 3;
@@ -58,8 +78,8 @@ function generateSVG(data: ContributionData, theme: string) {
   const bottomPadding = 30; // Space for legend
 
   const themes: Record<string, string[]> = {
-    classic: ['#161b22', '#104d2c', '#1b7d41', '#28a745', '#39d353'],
-    dark: ['#161b22', '#104d2c', '#1b7d41', '#28a745', '#39d353'],
+    classic: ['#f2f2f2', '#c3e6cb', '#71c68d', '#28a745', '#165c26'], // Light Background
+    dark: ['#161b22', '#104d2c', '#1b7d41', '#28a745', '#39d353'],    // Dark Background
     blue: ['#161b22', '#2a4481', '#456db1', '#6293d6', '#a5d0ff'],
     orange: ['#161b22', '#5c2d1b', '#92400e', '#f97316', '#fde047']
   };
