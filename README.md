@@ -2,7 +2,7 @@
 
 A high-performance, real-time GitLab contribution calendar generator for GitHub Profile READMEs and personal portfolios.
 
-![GitLab Activity](https://user4302-gitlab-activity-visualizer.netlify.app/api/calendar?username=user4302&theme=dark)
+![GitLab Activity](https://user4302-gitlab-activity-visualizer.netlify.app/api/calendar?username=user4302&theme=orange)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitLab Issues](https://img.shields.io/badge/GitLab-Issues-blue?logo=gitlab)](https://gitlab.com/user4302_Projects/coding/next-js/gitlab-activity-visualizer/-/issues)
@@ -24,12 +24,31 @@ A high-performance, real-time GitLab contribution calendar generator for GitHub 
 - **API**: Next.js API Routes (Serverless)
 - **Deployment**: [Netlify](https://www.netlify.com/)
 
-## Prerequisites
+## Quick Start 🚀
 
-- Node.js 18.x or 20.x
-- npm or yarn
+No setup required! Simply visit the live generator to create your embed link in seconds:
 
-## Installation 📥
+👉 **[Live Generator Tool](https://user4302-gitlab-activity-visualizer.netlify.app)**
+
+1. Enter your GitLab username.
+2. Select your favorite theme.
+3. Copy the Markdown code and paste it into your README!
+
+## Manual Usage ⚡
+
+If you prefer to construct the URL yourself, use the following Markdown syntax:
+
+```markdown
+![GitLab Activity](https://user4302-gitlab-activity-visualizer.netlify.app/api/calendar?username=YOUR_USERNAME&theme=dark)
+```
+
+### URL Parameters
+- `username`: Your GitLab username (required).
+- `theme`: Choice of `classic`, `dark`, `blue`, or `orange` (default: `classic`).
+
+## Self-Hosting / Installation 📥
+
+If you want to run your own instance:
 
 1. **Clone the repository**:
    ```bash
@@ -37,27 +56,11 @@ A high-performance, real-time GitLab contribution calendar generator for GitHub 
    cd gitlab-activity-visualizer
    ```
 
-2. **Install dependencies**:
+2. **Install & Run**:
    ```bash
    npm install
-   ```
-
-3. **Run locally**:
-   ```bash
    npm run dev
    ```
-
-## Usage ⚡
-
-To embed your calendar in a README, use the following Markdown syntax:
-
-```markdown
-![GitLab Activity](https://user4302-gitlab-activity-visualizer.netlify.app/api/calendar?username=user4302&theme=dark)
-```
-
-### URL Parameters
-- `username`: Your GitLab username (required).
-- `theme`: Choice of `classic`, `dark`, `blue`, or `orange` (default: `classic`).
 
 ## Project Structure 📂
 
