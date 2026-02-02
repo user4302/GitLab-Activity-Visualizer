@@ -79,6 +79,30 @@ npm run build
 npm start
 ```
 
+## Deployment 🚀
+
+This project is optimized for deployment on **Netlify**.
+
+### Deploy via Netlify UI
+1. Push your code to a GitLab repository.
+2. Log in to [Netlify](https://app.netlify.com/).
+3. Click **"Add new site"** > **"Import an existing project"**.
+4. Select your GitLab repository.
+5. Netlify will automatically detect the Next.js settings:
+   - **Build command**: `npm run build`
+   - **Publish directory**: `.next`
+6. Click **"Deploy site"**.
+
+### Deploy via Netlify CLI
+```bash
+# Install Netlify CLI
+npm install -g netlify-cli
+
+# Login and deploy
+netlify login
+netlify deploy --build
+```
+
 ## Contributing 🤝
 Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details. For any communication, please use GitLab Issues.
 
