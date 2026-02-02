@@ -142,7 +142,7 @@ function generateSVG(data: ContributionData, theme: string) {
   // Legend Refinement
   const legendX = leftPadding;
   const legendY = 7 * (squareSize + gap) + topPadding + 15;
-  labels += `<text x="${legendX}" y="${legendY + squareSize - 1}" class="label" style="font-size: 8px;">Less</text>`;
+  labels += `<text x="${legendX}" y="${legendY + squareSize - 1}" class="label" style="font-size: 8px;">Low</text>`;
   colors.forEach((color, i) => {
     const x = legendX + 35 + i * (squareSize + gap);
     labels += `<rect x="${x}" y="${legendY}" width="${squareSize}" height="${squareSize}" fill="${color}" rx="2" />`;
