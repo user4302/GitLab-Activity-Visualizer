@@ -39,11 +39,28 @@ export function Generator() {
         return () => clearTimeout(timer);
     }, [username, theme]);
 
-    if (!mounted) return null;
+    const [svgContent, setSvgContent] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const embedUrl = `${origin}/api/calendar?username=${username}&theme=${theme}`;
     const previewUrl = `${origin}/api/calendar?username=${debouncedParams.username}&theme=${debouncedParams.theme}&t=${debouncedParams.timestamp}`;
     const markdownCode = `![GitLab Activity](${embedUrl})`;
+
+    // Fetch SVG content for the live preview to enable tooltips/interaction
+    useEffect(() => {
+        if (!debouncedParams.username.trim() || !mounted) return;
+
+        setLoading(true);
+        fetch(previewUrl)
+            .then(res => res.text())
+            .then(text => {
+                setSvgContent(text);
+                setLoading(false);
+            })
+            .catch(() => setLoading(false));
+    }, [previewUrl, mounted]);
+
+    if (!mounted) return null;
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(markdownCode);
@@ -52,17 +69,17 @@ export function Generator() {
     };
 
     const themes = [
-        { id: 'classic', name: 'GitLab Light', colors: ['bg-[#f2f2f2]', 'bg-[#c3e6cb]', 'bg-[#71c68d]', 'bg-[#28a745]', 'bg-[#165c26]'] },
-        { id: 'dark', name: 'GitLab Dark', colors: ['bg-[#161b22]', 'bg-[#104d2c]', 'bg-[#1b7d41]', 'bg-[#28a745]', 'bg-[#39d353]'] },
-        { id: 'blue', name: 'Sky Blue', colors: ['bg-[#161b22]', 'bg-[#2a4481]', 'bg-[#456db1]', 'bg-[#6293d6]', 'bg-[#a5d0ff]'] },
+        { id: 'light', name: 'GitLab Light', colors: ['bg-[#f2f2f2]', 'bg-[#d2dcff]', 'bg-[#97acff]', 'bg-[#617ae2]', 'bg-[#3f51ae]'] },
+        { id: 'dark', name: 'GitLab Dark', colors: ['bg-[#161b22]', 'bg-[#303470]', 'bg-[#3f51ae]', 'bg-[#617ae2]', 'bg-[#97acff]'] },
+        { id: 'green', name: 'Grassy Green', colors: ['bg-[#161b22]', 'bg-[#104d2c]', 'bg-[#1b7d41]', 'bg-[#28a745]', 'bg-[#39d353]'] },
         { id: 'orange', name: 'Warm Orange', colors: ['bg-[#161b22]', 'bg-[#5c2d1b]', 'bg-[#92400e]', 'bg-[#f97316]', 'bg-[#fde047]'] },
     ];
 
     return (
         <div className="w-full space-y-12">
-            {/* Configuration Section: Vertical Stack */}
+            {/* ... existing config sections ... */}
             <div className="max-w-4xl mx-auto space-y-10">
-                {/* 1. Username input (Full Width) */}
+                {/* 1. Username input */}
                 <div className="space-y-3">
                     <label className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] ml-1">GitLab Username</label>
                     <input
@@ -74,7 +91,7 @@ export function Generator() {
                     />
                 </div>
 
-                {/* 2. Theme selector (4 in a row) */}
+                {/* 2. Theme selector */}
                 <div className="space-y-3">
                     <label className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] ml-1">Select Theme</label>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -96,7 +113,7 @@ export function Generator() {
                     </div>
                 </div>
 
-                {/* 3. Embed Code (Redesigned to avoid overlap) */}
+                {/* 3. Embed Code */}
                 <div className="space-y-3">
                     <label className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] ml-1">Markdown Link</label>
                     <div className="flex flex-col md:flex-row gap-4">
@@ -123,22 +140,19 @@ export function Generator() {
                 </div>
             </div>
 
-            {/* Preview Section - Bottom */}
+            {/* Preview Section */}
             <div className="space-y-6 pt-12 border-t border-gray-800/50">
                 <h3 className="text-[11px] font-bold text-gray-500 text-center uppercase tracking-[0.4em]">Live Preview</h3>
-                <div className="bg-[#0b0e14] border border-gray-800/30 rounded-3xl p-10 overflow-x-auto flex flex-col items-center min-h-[260px] shadow-2xl">
+                <div className={`bg-[#0b0e14] border border-gray-800/30 rounded-3xl p-10 overflow-x-auto flex flex-col items-center min-h-[260px] shadow-2xl transition-opacity ${loading ? 'opacity-50' : 'opacity-100'}`}>
                     <div className="w-full max-w-full overflow-x-auto pb-6 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent">
-                        <div className="min-w-fit mx-auto">
-                            <img
-                                src={previewUrl}
-                                alt="GitLab Contribution Calendar"
-                                className="max-w-none filter drop-shadow-[0_0_50px_rgba(16,185,129,0.08)]"
-                                key={`${debouncedParams.username}-${debouncedParams.theme}-${debouncedParams.timestamp}`}
-                                style={{ imageRendering: 'crisp-edges' }}
-                            />
-                        </div>
+                        <div
+                            className="min-w-fit mx-auto cursor-help"
+                            dangerouslySetInnerHTML={{ __html: svgContent }}
+                        />
                     </div>
-                    <p className="mt-8 text-[10px] text-gray-700 font-mono tracking-[0.3em] font-medium">REAL-TIME DATA • FETCHED FROM GITLAB</p>
+                    <p className="mt-8 text-[10px] text-gray-700 font-mono tracking-[0.3em] font-medium uppercase font-bold">
+                        {loading ? 'Refreshing Data...' : 'Hover squares to see dates • GitLab Real-time'}
+                    </p>
                 </div>
             </div>
         </div>

@@ -18,8 +18,11 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const response = await fetch(`https://gitlab.com/users/${username}/calendar.json`, {
-      next: { revalidate: 0 } // Disable fetch cache for high responsiveness
+    const response = await fetch(`https://gitlab.com/users/${username}/calendar.json?v=${Date.now()}`, {
+      cache: 'no-store',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36'
+      }
     });
 
     if (!response.ok) {
@@ -81,13 +84,13 @@ function generateSVG(data: ContributionData, theme: string) {
   const bottomPadding = 30; // Space for legend
 
   const themes: Record<string, string[]> = {
-    classic: ['#f2f2f2', '#c3e6cb', '#71c68d', '#28a745', '#165c26'], // Light Background
-    dark: ['#161b22', '#104d2c', '#1b7d41', '#28a745', '#39d353'],    // Dark Background
-    blue: ['#161b22', '#2a4481', '#456db1', '#6293d6', '#a5d0ff'],
+    light: ['#f2f2f2', '#d2dcff', '#97acff', '#617ae2', '#3f51ae'],
+    dark: ['#161b22', '#303470', '#3f51ae', '#617ae2', '#97acff'],
+    green: ['#161b22', '#104d2c', '#1b7d41', '#28a745', '#39d353'],
     orange: ['#161b22', '#5c2d1b', '#92400e', '#f97316', '#fde047']
   };
 
-  const colors = themes[theme] || themes.classic;
+  const colors = themes[theme] || themes.light;
 
   // Official GitLab Ranges: none, 1-9, 10-19, 20-29, 30+
   const getColor = (count: number) => {
@@ -98,10 +101,14 @@ function generateSVG(data: ContributionData, theme: string) {
     return colors[4];
   };
 
-  const today = new Date();
-  const startDate = new Date();
-  startDate.setFullYear(today.getFullYear() - 1);
-  startDate.setDate(startDate.getDate() - startDate.getDay());
+  const now = new Date();
+  const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
+  // Normalized "today" at 12:00 to avoid timezone shifting during arithmetic
+  const todayMidday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
+  const startDate = new Date(todayMidday);
+  startDate.setDate(todayMidday.getDate() - 364); // Go back 52 weeks
+  startDate.setDate(startDate.getDate() - startDate.getDay()); // Snap to preceding Sunday
 
   let rects = '';
   let labels = '';
@@ -109,32 +116,41 @@ function generateSVG(data: ContributionData, theme: string) {
 
   const currentDate = new Date(startDate);
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const dayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   // Day labels
   [1, 3, 5].forEach(dayIdx => {
     const y = dayIdx * (squareSize + gap) + topPadding + squareSize - 1;
-    labels += `<text x="10" y="${y}" class="label">${dayNames[dayIdx]}</text>`;
+    labels += `<text x="5" y="${y}" class="label">${dayNames[dayIdx][0]}</text>`;
   });
 
   for (let week = 0; week < 53; week++) {
     const x = week * (squareSize + gap) + leftPadding;
 
     for (let day = 0; day < 7; day++) {
-      const dateStr = currentDate.toISOString().split('T')[0];
-      const count = data[dateStr] || 0;
+      const yyyy = currentDate.getFullYear();
+      const mm = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const dd = String(currentDate.getDate()).padStart(2, '0');
+      const dateStr = `${yyyy}-${mm}-${dd}`;
+
+      const count = Number(data[dateStr] || 0);
       const y = day * (squareSize + gap) + topPadding;
 
       if (day === 0) {
         const month = months[currentDate.getMonth()];
-        const monthKey = month + currentDate.getFullYear();
+        const monthKey = `${month}-${currentDate.getFullYear()}`;
         if (monthLabels[monthKey] === undefined) {
           labels += `<text x="${x}" y="15" class="label">${month}</text>`;
           monthLabels[monthKey] = week;
         }
       }
 
-      rects += `<rect x="${x}" y="${y}" width="${squareSize}" height="${squareSize}" fill="${getColor(count)}" rx="2" />`;
+      rects += `
+        <g>
+          <title>${dateStr}${dateStr === todayStr ? ' (Today)' : ''}: ${count} contribution${count === 1 ? '' : 's'}</title>
+          <rect x="${x}" y="${y}" width="${squareSize}" height="${squareSize}" fill="${getColor(count)}" rx="2" />
+        </g>
+      `.trim();
       currentDate.setDate(currentDate.getDate() + 1);
     }
   }
