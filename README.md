@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GitLab Contribution Calendar Generator
 
-## Getting Started
+🚀 A dynamic, high-performance service to visualize your GitLab activity via embedded SVGs.
 
-First, run the development server:
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
+[![Next.js](https://img.shields.io/badge/Built%20with-Next.js-black?logo=next.js)](https://nextjs.org/)
 
+## Features ✨
+- **Dynamic SVG API**: Direct embedding in READMEs via a simple URL.
+- **Classic & Custom Themes**: Choose from multiple color schemes including GitLab Classic, Dark Mode, Sky Blue, and Warm Orange.
+- **Month & Day Labels**: Professional layout with clear temporal markers.
+- **Premium Generator UI**: Interactive web interface with live preview and one-click copy.
+- **Performant & Scalable**: Server-side rendering with caching for optimal speed.
+
+## Tech Stack / Built With 🛠️
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Deployment**: Optimized for [Netlify](https://www.netlify.com/) or [Vercel](https://vercel.com/)
+
+## Prerequisites
+- **Node.js**: v18.17.0 or higher
+- **npm**: v9.0.0 or higher
+
+## Installation 📥
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clone the repository
+git clone [YOUR_GITLAB_REPO_URL_HERE]
+
+# Navigate to the project directory
+cd gitlab-contribution-calendar
+
+# Install dependencies
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage / Quick Start ⚡
+To embed your calendar in a README, use the following Markdown syntax:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```markdown
+![GitLab Activity](https://your-deployment-url.com/api/calendar?username=oregand&theme=dark)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### URL Parameters
+| Parameter | Description | Options | Default |
+|-----------|-------------|---------|---------|
+| `username`| Your GitLab username | (string) | Required |
+| `theme`   | Visual color palette | `classic`, `dark`, `blue`, `orange` | `classic` |
 
-## Learn More
+## Project Structure 📂
+```text
+├── src/
+│   ├── app/
+│   │   ├── api/calendar/route.ts  # Core SVG Rendering Logic
+│   │   ├── layout.tsx             # Root Layout
+│   │   └── page.tsx               # Landing Page UI
+│   └── components/
+│       └── Generator.tsx          # Interactive Generator Component
+├── public/                        # Static Assets
+└── tailwind.config.ts             # Styling Configuration
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Development / Running Locally 🏗️
+```bash
+# Start development server
+npm run dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Open in browser
+# http://localhost:3000
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Building for Production 🏭
+```bash
+# Create production build
+npm run build
 
-## Deploy on Vercel
+# Start production server
+npm start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing 🤝
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details. For any communication, please use GitLab Issues.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License 📄
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## Support & Contact 👋
+For any questions, bug reports, feature requests, or security concerns, please open an issue on GitLab: [YOUR_GITLAB_REPO_URL_HERE]/-/issues. No email or direct messaging support is available.
+
+---
+*Note: This project is not affiliated with GitLab Inc.*
