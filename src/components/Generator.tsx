@@ -11,6 +11,11 @@ import React, { useState, useEffect } from 'react';
 export function Generator() {
     const [username, setUsername] = useState('user4302');
     const [theme, setTheme] = useState('classic');
+    const [debouncedParams, setDebouncedParams] = useState({
+        username: 'user4302',
+        theme: 'classic',
+        timestamp: new Date().getTime()
+    });
     const [copied, setCopied] = useState(false);
     const [origin, setOrigin] = useState('');
     const [mounted, setMounted] = useState(false);
@@ -20,9 +25,24 @@ export function Generator() {
         setMounted(true);
     }, []);
 
+    // Debounce username and theme for the live preview
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (username.trim()) {
+                setDebouncedParams({
+                    username: username.trim(),
+                    theme,
+                    timestamp: new Date().getTime()
+                });
+            }
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [username, theme]);
+
     if (!mounted) return null;
 
     const embedUrl = `${origin}/api/calendar?username=${username}&theme=${theme}`;
+    const previewUrl = `${origin}/api/calendar?username=${debouncedParams.username}&theme=${debouncedParams.theme}&t=${debouncedParams.timestamp}`;
     const markdownCode = `![GitLab Activity](${embedUrl})`;
 
     const copyToClipboard = () => {
@@ -110,10 +130,10 @@ export function Generator() {
                     <div className="w-full max-w-full overflow-x-auto pb-6 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent">
                         <div className="min-w-fit mx-auto">
                             <img
-                                src={`${embedUrl}&t=${new Date().getTime()}`}
+                                src={previewUrl}
                                 alt="GitLab Contribution Calendar"
                                 className="max-w-none filter drop-shadow-[0_0_50px_rgba(16,185,129,0.08)]"
-                                key={`${username}-${theme}`}
+                                key={`${debouncedParams.username}-${debouncedParams.theme}-${debouncedParams.timestamp}`}
                                 style={{ imageRendering: 'crisp-edges' }}
                             />
                         </div>

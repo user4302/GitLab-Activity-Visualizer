@@ -37,7 +37,10 @@ export async function GET(req: NextRequest) {
     return new NextResponse(svg, {
       headers: {
         'Content-Type': 'image/svg+xml',
-        'Cache-Control': 'public, max-age=10, stale-while-revalidate=59',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+        'Vary': 'Accept-Encoding, Cookie',
       },
     });
   } catch (error) {
@@ -144,7 +147,7 @@ function generateSVG(data: ContributionData, theme: string) {
     const x = legendX + 35 + i * (squareSize + gap);
     labels += `<rect x="${x}" y="${legendY}" width="${squareSize}" height="${squareSize}" fill="${color}" rx="2" />`;
   });
-  labels += `<text x="${legendX + 35 + 5 * (squareSize + gap) + 5}" y="${legendY + squareSize - 1}" class="label" style="font-size: 8px;">More</text>`;
+  labels += `<text x="${legendX + 35 + 5 * (squareSize + gap) + 5}" y="${legendY + squareSize - 1}" class="label" style="font-size: 8px;">High</text>`;
 
   const width = 53 * (squareSize + gap) + leftPadding + 10;
   const height = 7 * (squareSize + gap) + topPadding + bottomPadding;

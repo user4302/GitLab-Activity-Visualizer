@@ -10,9 +10,12 @@ All notable changes to this project will be documented in this file.
 - **Interactive UI**: Added `Generator` component with theme selection and live preview.
 - **Themes**: Support for `GitLab Light`, `GitLab Dark`, `Sky Blue`, and `Warm Orange`.
 - **Netlify Ready**: Added `netlify.toml` and documentation for instant deployment.
-- **Caching Fixes**: Implemented Edge-optimized caching and cache-busting for fast live updates.
+- **Caching Fixes**: Implemented aggressive `no-store` headers and cache-busting for fast, reliable live updates on Netlify.
+- **State Debouncing**: Added a 500ms debounce to the preview generator to eliminate race conditions and reduce API spam.
 
 ### Fixed 🛠️
 - **Hydration**: Resolved SSR/CSR mismatch issues in Next.js.
 - **API Resilience**: Added error Handling for 404/Not Found usernames.
 - **Netlify Config**: Corrected Node.js versioning in `netlify.toml`.
+- **UI Sync**: Fixed a race condition where specific typing speeds could show out-of-order preview data.
+- **Legend Labels**: Updated visibility legend to use "Less" and "High" for better clarity.
