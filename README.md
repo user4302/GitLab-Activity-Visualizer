@@ -39,7 +39,7 @@ npm install
 To embed your calendar in a README, use the following Markdown syntax:
 
 ```markdown
-![GitLab Activity](https://your-deployment-url.com/api/calendar?username=oregand&theme=dark)
+![GitLab Activity](https://user4302-gitlab-activity-visualizer.netlify.app/api/calendar?username=user4302&theme=classic)
 ```
 
 ### URL Parameters

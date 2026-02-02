@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 
 export function Generator() {
-    const [username, setUsername] = useState('oregand');
+    const [username, setUsername] = useState('user4302');
     const [theme, setTheme] = useState('classic');
     const [copied, setCopied] = useState(false);
     const [origin, setOrigin] = useState('');
@@ -45,7 +45,7 @@ export function Generator() {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         className="w-full bg-black/40 border border-gray-800 rounded-2xl px-6 py-5 focus:ring-2 focus:ring-emerald-500/50 outline-none transition-all text-xl text-emerald-100 placeholder:text-gray-700"
-                        placeholder="e.g. oregand"
+                        placeholder="e.g. user4302"
                     />
                 </div>
 
