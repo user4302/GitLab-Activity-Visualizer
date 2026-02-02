@@ -128,7 +128,7 @@ function generateSVG(data: ContributionData, theme: string) {
       if (day === 0) {
         const month = months[currentDate.getMonth()];
         const monthKey = month + currentDate.getFullYear();
-        if (!monthLabels[monthKey]) {
+        if (monthLabels[monthKey] === undefined) {
           labels += `<text x="${x}" y="15" class="label">${month}</text>`;
           monthLabels[monthKey] = week;
         }
