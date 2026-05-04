@@ -1,7 +1,7 @@
-
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 /**
  * The primary interface for generating GitLab contribution calendars.
@@ -14,16 +14,9 @@ export function Generator() {
     const [debouncedParams, setDebouncedParams] = useState({
         username: 'user4302',
         theme: 'classic',
-        timestamp: new Date().getTime()
+        timestamp: 0
     });
     const [copied, setCopied] = useState(false);
-    const [origin, setOrigin] = useState('');
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setOrigin(window.location.origin);
-        setMounted(true);
-    }, []);
 
     // Debounce username and theme for the live preview
     useEffect(() => {
@@ -39,10 +32,8 @@ export function Generator() {
         return () => clearTimeout(timer);
     }, [username, theme]);
 
-    if (!mounted) return null;
-
-    const embedUrl = `${origin}/api/calendar?username=${username}&theme=${theme}`;
-    const previewUrl = `${origin}/api/calendar?username=${debouncedParams.username}&theme=${debouncedParams.theme}&t=${debouncedParams.timestamp}`;
+    const embedUrl = `/api/calendar?username=${username}&theme=${theme}`;
+    const previewUrl = `/api/calendar?username=${debouncedParams.username}&theme=${debouncedParams.theme}&t=${debouncedParams.timestamp}`;
     const markdownCode = `![GitLab Activity](${embedUrl})`;
 
     const copyToClipboard = () => {
@@ -129,12 +120,15 @@ export function Generator() {
                 <div className="bg-[#0b0e14] border border-gray-800/30 rounded-3xl p-10 overflow-x-auto flex flex-col items-center min-h-[260px] shadow-2xl">
                     <div className="w-full max-w-full overflow-x-auto pb-6 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent">
                         <div className="min-w-fit mx-auto">
-                            <img
+                            <Image
                                 src={previewUrl}
                                 alt="GitLab Contribution Calendar"
                                 className="max-w-none filter drop-shadow-[0_0_50px_rgba(16,185,129,0.08)]"
                                 key={`${debouncedParams.username}-${debouncedParams.theme}-${debouncedParams.timestamp}`}
                                 style={{ imageRendering: 'crisp-edges' }}
+                                width={800}
+                                height={128}
+                                unoptimized
                             />
                         </div>
                     </div>
